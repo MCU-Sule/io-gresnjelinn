@@ -1,0 +1,104 @@
+2072028 - Grace Angelina Gunawan
+
+Things to Add
+
+1. Add file chooser implementation to save and load file
+Fokusnya hanya mengganti pathnya menjadi dipilih menggunakan file chooser, selebihnya tetap sama
+Program ada di yang modified
+
+2. Add save and load 2 using java nio
+Sudah termasuk di program wajib
+
+3. Add error handling for this application
+- list all error scenario that potentially happen?
+Salah satunya adalah error handling yang sudah dilakukan pada program yaitu IOException
+Yang menjadi masalahnya adalah jika operasi input atau output gagal 
+Contohnya ketika kita mencoba membaca sebuah file yang tidak ada
+Selain itu juga ada null error, dimana ketika kita hendak memasukkan data namun itu tidak dapat dilakukan karena ada data yang tidak lengkap, akan terjadi error
+Ini dapat ditangani dengan membungkusnya dengan try, kemudian untuk catchnya menampilkan exception yang menyatakan bahwa seluruh field harus diisi
+
+
+4. Is it better to save data on plain text or json? Why?
+Json, karena jika kita menyimpan suatu data tertentu dalam bentuk Json, penulisannya yang lebih terstruktur
+akan mempermudah kita untuk mengakses dan membacanya baik secara langsung oleh kita sendiri ataupun oleh 
+komputer. Jika kita membacanya langsung, dengan adanya keterangan sebelum data yang akan kita olah, 
+mempermudah kita untuk mengerti data tersebut.
+Untuk pembacaan oleh komputer, penulisannya yang terstruktur sangat mempermudah jika kita ingin mengakses,
+menggunakan, atau mengubah data tertentu. Misalnya jika kita hanya ingin mengambil seluruh usernya saja, 
+tanpa mengambil komentarnya, akan mudah untuk melakukan hal tersebut dikarenakan dengan Json strukturnya 
+sudah terbagi menjadi user dan komentar. Berbeda dengan jika kita menggunakan plain text, tidak ada patokan
+mama yang merupakan user atau komentar. Walaupun jika dibaca oleh manusia mudah untuk dibedakan, namun untuk
+mengolah data menjadi sulit. 
+
+5. Is there a better format to json to store data on plain text? 
+Google Protocol Buffers -> sebuah protokol yang dikembangkan oleh Google secara internal
+Gunanya untuk menyimpan dan bertukar informasi dengan lebih terstruktur dari berbagai jenis tipe data 
+Beberapa keunggulannya dibanding Json : 
+- Protobuf mendukung serialisasi untuk format binary, sementara JSON untuk serialisasi format text
+- JSON digunakan untuk task yang umum dan juga terbatas pada beberapa tipe data, Protobuf lebih dapat menghandle variasi data yang lebih banyak. Bahkan hingga method juga bisa diserialisasi.
+- JSON hanya mendukung bentuk pesan, tapi Protobuf juga memiliki set skema lainnya tidak hanya bentuk pesan saja
+
+Name a couple of alternatives (min 2)
+Beberapa alternatif lainnya : 
+- CSV (Comma Separated Value) -> menyimpan informasi yang dipisahkan oleh koma
+- XML (Extensible Markup Language) -> untuk menyederhanakan pertukaran dan penyimpanan data
+XML membuat dokumen dapat diangkut melintasi sistem dan aplikasi.
+- TSV (Tab Separated Value) -> alternatif CSV, namun ini menyimpan informasi yang dipisahkan oleh tab
+
+6. Is it better to save data on file instead of a dedicated database?
+Keduanya memiliki kelebihan dan kekurangannya masing-masing
+FILE : 
++ Performa lebih baik
++ Lebih mudah untuk menyimpan data
++ Memindahkan data lebih mudah karena hanya menggunakan copy paste
++ Efektivitas biaya
++ Lebih mudah dipindahkan ke Penyimpanan Cloud
+- Keamanan lebih tidak terjamin
+
+DATABASE : 
++ Lebih konsisten dan dapat di rollback
++ Pelacakan lebih mudah
++ Di back up secara otomatis
++ Lebih aman dibanding menyimpan di File
+- File harus diconvert terlebih dahulu agar bisa disimpan di DB
+- Data back up an berat
+- Penggunaan memori tidak efektif
+
+Is there a scenario where saving data on file be better?
+Ada, ketika aplikasi akan memiliki banyak pengguna dan juga ketika aplikasi 
+menangani jumlah file yang sangat banyak. 
+
+7. Can you test if a specific file exist in specified path with java? How?
+Dengan menggunakan fungsi exists() yang sudah tersedia pada standard library
+Cara menggunakannya adalah membuat object baru dari class File() di mana parameternya diisi oleh path dari sebuah file
+Misal
+File file = new File("D:\\hasil.txt");
+Untuk memeriksanya kita bisa memanggil (file.exists())
+Akan me return True jika ada, False jika tidak ada
+
+8. Can you test if a specific directory exist in a specified path? How?
+Untuk directory, caranya adalah sama saja
+Bedanya ada di parameter yang kita isikan pada saat membuat object
+Kini bentuknya adalah directory dan bukan file tertentu
+File file = new File("C:\\Documents")
+file.exits()
+
+9. Can you delete or move file using Java? How?
+Bisa menghapus data menggunakan Java dengan menggunakan library delete() yang sudah disediakan
+Cara menggunakannya adalah mirip dengan no 7
+Kita membuat object terlebih dahulu untuk file yang hendak dihapus
+Kemudian file.delete() untuk menghapusnya
+
+Untuk memindahkan file, bisa menggunakan library bawaan move()
+Ada 2 parameter wajib yaitu source dan target
+Cara menggunakannya : 
+Files.move(Paths.get("D:\\hasil.txt"), Paths.get("C:\\result.txt"))
+
+Selain itu file juga bisa di rename menggunakan .renameTo()
+File file = new File("D:\\hasil.txt")
+file.renameTo(new File("D:\\result.txt"))
+
+10. Can you think of potential security problem when you allow Java to freely
+change file on your computer? How do we prevent that?
+Jika Java dapat menggantinya secara bebas, maka akan berbahaya juga
+Dapat dicegah dengan memberikan batasan folder2 tertentu yang tidak bisa disentuh oleh Java
